@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Basics of Web Design | Open Shelf</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="brand">
+                <span class="brand-title">Textbook Gallery</span>
+            </div>
+            <nav class="primary-nav" aria-label="Primary">
+                <a class="nav-link" href="index.html#gallery">Gallery</a>
+                <a class="nav-link" href="index.html#about">About</a>
+            </nav>
+        </header>
+        <main class="page-shell">
+            <section class="book-detail" aria-labelledby="book-title">
+                <div class="detail-header">
+                    <p class="eyebrow">Textbook detail</p>
+                    <h1 id="book-title">Basics of Web Design</h1>
+                    <p class="author">By Felke-Morris</p>
+                </div>
+                <div class="detail-layout">
+                    <figure class="detail-figure">
+                        <img src="img/0.jpg" alt="basics-of-web-design-cover" />
+                        <figcaption>
+                            Guiding heuristics in every chapter
+                        </figcaption>
+                    </figure>
+                    <div class="detail-panel">
+                        <div class="overview">
+                            <h2>Overview</h2>
+                            <p>
+                                This textbook provides a foundational approach
+                                to modern web design, covering HTML5, CSS3, and
+                                responsive principles. Felke-Morris guides
+                                students through the process of creating
+                                accessible and well-structured websites with
+                                practical exercises. It is an ideal resource for
+                                beginners looking to build a strong technical
+                                and creative base in web development.
+                            </p>
+                        </div>
+                        <div class="book-info">
+                            <h3>Book info</h3>
+                            <dl>
+                                <dt>ISBN</dt>
+                                <dd>978-1-4027-6871-2</dd>
+                                <dt>Edition</dt>
+                                <dd>2nd Edition</dd>
+                                <dt>Category</dt>
+                                <dd>Web Design</dd>
+                                <dt>Pages</dt>
+                                <dd>544</dd>
+                            </dl>
+                        </div>
+                        <div class="rating-panel" aria-label="4 out of 5 stars">
+                            <div class="stars">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="rating-text">4 / 5</p>
+                        </div>
+                        <a
+                            class="back-link button"
+                            href="index.html"
+                            role="button"
+                            >Browse more books</a
+                        >
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="site-footer">
+            <p>© 2026 James Hoang. All rights reserved.</p>
+        </footer>
+    </body>
+</html>
