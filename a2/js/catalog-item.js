@@ -10,6 +10,7 @@ function normalizeMatchValue(value) {
 
 export class CatalogItem {
     constructor({ title, type, author, year, genre, rating, description }) {
+        // trim + clean text once here so rendering/filtering stays consistent
         this.title = normalizeWhitespace(title);
         this.type = normalizeWhitespace(type);
         this.author = normalizeWhitespace(author);
@@ -23,6 +24,7 @@ export class CatalogItem {
         const typeFilter = normalizeMatchValue(type);
         const genreFilter = normalizeMatchValue(genre);
 
+        // "all" means no filter on that field
         const matchesType =
             typeFilter === "all" ||
             normalizeMatchValue(this.type) === typeFilter;
@@ -47,6 +49,7 @@ export class CatalogItem {
     }
 
     toCardElement() {
+        // build the card with pure dom api (no template libs)
         const col = document.createElement("div");
         col.className = "col-12 col-md-6 col-xl-4";
 

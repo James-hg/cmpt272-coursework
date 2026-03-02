@@ -10,6 +10,7 @@ const EXPECTED_HEADERS = [
     "description",
 ];
 
+// keep parse status here so app.js can show warnings/errors after parsing
 let lastParseReport = {
     errors: [],
     warnings: [],
@@ -21,11 +22,13 @@ export function splitCsvLine(line) {
     let currentValue = "";
     let inQuotes = false;
 
+    // manual parser: split on commas unless we are inside quoted text
     for (let index = 0; index < line.length; index += 1) {
         const char = line[index];
         const nextChar = line[index + 1];
 
         if (char === '"') {
+            // handle escaped quote ("")
             if (inQuotes && nextChar === '"') {
                 currentValue += '"';
                 index += 1;
@@ -71,6 +74,7 @@ export function parseCsvText(csvText) {
     const headerLine = lines[0] ?? "";
     const headerColumns = splitCsvLine(headerLine);
 
+    // remove utf-8 bom if it exists, so header check still works
     if (headerColumns.length > 0) {
         headerColumns[0] = headerColumns[0].replace(/^\uFEFF/, "");
     }
@@ -86,6 +90,7 @@ export function parseCsvText(csvText) {
     for (let rowIndex = 1; rowIndex < lines.length; rowIndex += 1) {
         const rawLine = lines[rowIndex];
         if (!rawLine || rawLine.trim() === "") {
+            // skip empty lines so random spacing in csv does not break parsing
             continue;
         }
 
@@ -110,6 +115,7 @@ export function parseCsvText(csvText) {
             continue;
         }
 
+        // convert each valid row into a CatalogItem object for the rest of the app
         items.push(
             new CatalogItem({
                 title,

@@ -66,6 +66,7 @@ function getUniqueValues(items, key) {
             map.set(normalized, raw);
         }
     });
+    // sort options so dropdown values stay predictable
     return [...map.values()].sort((left, right) => left.localeCompare(right));
 }
 
@@ -86,6 +87,7 @@ function updateSelectOptions(selectElement, items, key, allLabel) {
 }
 
 function sortItems(items, sortOrder) {
+    // copy first so original array order is not mutated
     const sorted = [...items];
     sorted.sort((left, right) => {
         if (sortOrder === "year-asc") {
@@ -122,6 +124,7 @@ function renderItems(items) {
         const cardElement = item.toCardElement();
         const button = cardElement.querySelector(".view-details-btn");
         if (button) {
+            // wire each card button to open its own details in the modal
             button.addEventListener("click", () => openDetailsModal(item));
         }
         elements.catalogGrid.appendChild(cardElement);
@@ -151,6 +154,7 @@ export function openDetailsModal(item) {
     elements.detailRating.textContent = details.rating;
 
     if (!detailModalInstance) {
+        // lazy init bootstrap modal once and reuse it
         detailModalInstance = new bootstrap.Modal(elements.detailModal);
     }
     detailModalInstance.show();
@@ -158,6 +162,7 @@ export function openDetailsModal(item) {
 
 function readFileAsText(file) {
     return new Promise((resolve, reject) => {
+        // browser api required in assignment for local csv reading
         const reader = new FileReader();
         reader.onload = () => resolve(String(reader.result ?? ""));
         reader.onerror = () => reject(new Error("Could not read the uploaded file."));
@@ -189,6 +194,7 @@ export function applyViewState() {
     const genre = elements.genreFilter.value;
     const sortOrder = elements.sortOrder.value;
 
+    // apply filters first, then sorting on the filtered list
     const filtered = allItems.filter((item) => item.matchesFilter({ type, genre }));
     const sorted = sortItems(filtered, sortOrder);
 
@@ -213,6 +219,7 @@ export async function loadFile(file) {
         }
 
         allItems = parsedItems;
+        // repopulate filter dropdowns from the newly uploaded file only
         populateFilterOptions(allItems);
         resetControlValues();
         setControlsEnabled(allItems.length > 0);
