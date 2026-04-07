@@ -6,7 +6,7 @@ interface LocationPickerMapProps {
     onPickLocation: (coords: Coordinates) => void;
 }
 
-// this turns a map click into the lat/lon object the form uses
+// turn a map click into the lat/lon object the form uses
 const MapClickHandler = ({
     onPickLocation,
 }: {
@@ -29,13 +29,14 @@ export const LocationPickerMap = ({
     onPickLocation,
 }: LocationPickerMapProps) => {
     return (
+        // show the map the user clicks to choose the last seen location
         <MapContainer center={[49.2827, -123.1207]} zoom={11} className="tb-map">
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MapClickHandler onPickLocation={onPickLocation} />
-            // show the picked spot so the user knows what will be saved
+            {/* show the picked spot so the user knows what will be saved */}
             {selectedLocation && (
                 <CircleMarker
                     center={[selectedLocation.lat, selectedLocation.lon]}

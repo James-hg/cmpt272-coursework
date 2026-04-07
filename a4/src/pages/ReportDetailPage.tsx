@@ -6,6 +6,7 @@ import { useReportDetail } from "../hooks/useReportDetail";
 import { getReports, saveReports } from "../services";
 import { ReportStatus } from "../types";
 
+// show one full report and let the owner mark it as found
 export const ReportDetailPage = () => {
     const navigate = useNavigate();
     const { reportId } = useParams();
@@ -68,7 +69,7 @@ export const ReportDetailPage = () => {
                                 }
 
                                 const allReports = await getReports();
-                                // jsonbin stores the whole list, so replace the one report we need to change
+                                // replace the one report we need to change because jsonbin stores the whole list
                                 const updatedReports = allReports.map((item) =>
                                     item.id === reportId
                                         ? { ...item, status: ReportStatus.Found }

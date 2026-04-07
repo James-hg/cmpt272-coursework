@@ -4,11 +4,13 @@ import { StatusMessage } from "../components/StatusMessage";
 import { useReports } from "../hooks/useReports";
 import { AnimalType, ReportStatus } from "../types";
 
+// show all reports with simple filters on this page
 export const BrowsePage = () => {
     const { reports, loading, error } = useReports();
     const [animalType, setAnimalType] = useState<AnimalType | "all">("all");
     const [status, setStatus] = useState<ReportStatus | "all">("all");
 
+    // keep only the reports that match both filter dropdowns
     const filteredReports = reports.filter((report) => {
         const typeMatch = animalType === "all" || report.animalType === animalType;
         const statusMatch = status === "all" || report.status === status;

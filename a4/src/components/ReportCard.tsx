@@ -5,6 +5,7 @@ interface ReportCardProps {
     report: AnimalReport;
 }
 
+// show one report in the browse page grid
 export const ReportCard = ({ report }: ReportCardProps) => {
     return (
         <article className="card h-100 border-0 shadow-sm">
@@ -30,6 +31,7 @@ export const ReportCard = ({ report }: ReportCardProps) => {
                     {report.animalType}
                 </p>
                 <p className="small mb-3">{report.lastSeenAddress}</p>
+                {/* open the full report page */}
                 <Link to={`/reports/${report.id}`} className="btn btn-outline-primary btn-sm">
                     View Details
                 </Link>

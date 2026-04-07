@@ -3,6 +3,7 @@ interface StatusMessageProps {
     text: string;
 }
 
+// keep loading, error, and info messages in one simple component
 export const StatusMessage = ({ type, text }: StatusMessageProps) => {
     if (type === "loading") {
         return (

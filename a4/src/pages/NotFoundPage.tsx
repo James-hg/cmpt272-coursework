@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+// show this page when the route does not exist
 export const NotFoundPage = () => {
     return (
         <section className="card border-0 shadow-sm">

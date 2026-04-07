@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getReports } from "../services";
 import type { AnimalReport } from "../types";
 
+// load one report using the id from the route
 export const useReportDetail = (reportId: string | undefined) => {
     const [report, setReport] = useState<AnimalReport | null>(null);
     const [loading, setLoading] = useState(true);
@@ -36,6 +37,7 @@ export const useReportDetail = (reportId: string | undefined) => {
     }, [reportId]);
 
     useEffect(() => {
+        // load again if the route id changes
         void reloadReport();
     }, [reloadReport]);
 

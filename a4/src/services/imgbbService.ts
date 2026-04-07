@@ -8,8 +8,10 @@ if (!apiKey) {
 
 const uploadUrl = `https://api.imgbb.com/1/upload?key=${apiKey}`;
 
+// upload the selected image and return the hosted image url
 export const uploadImage = async (file: File): Promise<string> => {
     const formData = new FormData();
+    // put the image into form data for imgbb
     formData.append("image", file);
 
     const response = await fetch(uploadUrl, {

@@ -7,16 +7,17 @@ import {
 } from "../services";
 import { ReportStatus, type AnimalReport, type Coordinates, type ReportDraft } from "../types";
 
+// handle the create report flow and its loading and error state
 export const useCreateReport = () => {
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // this is used when the user clicks the map in the form
+    // get the address when the user clicks the map in the form
     const pickAddress = async (coords: Coordinates): Promise<string> => {
         return reverseGeocode(coords.lat, coords.lon);
     };
 
-    // this does the whole submit flow from image upload to saving the updated list
+    // run the whole submit flow from image upload to saving the updated list
     const submitReport = async (draft: ReportDraft): Promise<boolean> => {
         setSubmitting(true);
         setError(null);
@@ -48,6 +49,7 @@ export const useCreateReport = () => {
                 status: ReportStatus.Lost,
             };
 
+            // add the new report to the front because jsonbin stores one array
             const existing = await getReports();
             await saveReports([report, ...existing]);
             return true;

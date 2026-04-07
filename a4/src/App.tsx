@@ -6,14 +6,18 @@ import { NewReportPage } from "./pages/NewReportPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ReportDetailPage } from "./pages/ReportDetailPage";
 
+// set up the main page routes here
 function App() {
     return (
         <div className="app-shell">
             <AppNavbar />
             <main className="container py-4">
                 <Routes>
+                    {/* show the home page map here */}
                     <Route path="/" element={<HomePage />} />
+                    {/* show the browse page here */}
                     <Route path="/reports" element={<BrowsePage />} />
+                    {/* show the new report form here */}
                     <Route path="/reports/new" element={<NewReportPage />} />
                     <Route
                         path="/reports/:reportId"

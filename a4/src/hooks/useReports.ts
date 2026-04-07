@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getReports } from "../services";
 import type { AnimalReport } from "../types";
 
+// load the full reports list for the map and browse pages
 export const useReports = () => {
     const [reports, setReports] = useState<AnimalReport[]>([]);
     const [loading, setLoading] = useState(true);
@@ -24,6 +25,7 @@ export const useReports = () => {
     }, []);
 
     useEffect(() => {
+        // load the reports once when the page opens
         void reloadReports();
     }, [reloadReports]);
 

@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
 
+// add the active class to the current nav link
 const getClassName = ({ isActive }: { isActive: boolean }) =>
     `nav-link ${isActive ? "active" : ""}`;
 
+// show the top nav on every page
 export const AppNavbar = () => {
     return (
         <nav className="navbar navbar-expand navbar-dark app-navbar">

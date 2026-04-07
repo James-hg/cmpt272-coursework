@@ -6,6 +6,7 @@ interface ReportsMapProps {
     reports: AnimalReport[];
 }
 
+// show all lost reports on the home page map
 export const ReportsMap = ({ reports }: ReportsMapProps) => {
     return (
         <MapContainer center={[49.2827, -123.1207]} zoom={11} className="tb-map">
@@ -13,6 +14,7 @@ export const ReportsMap = ({ reports }: ReportsMapProps) => {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            // turn each report into one marker on the map
             {reports.map((report) => (
                 <CircleMarker
                     key={report.id}
@@ -21,6 +23,7 @@ export const ReportsMap = ({ reports }: ReportsMapProps) => {
                     pathOptions={{ color: "#d7263d" }}
                 >
                     <Popup>
+                        {/* give a quick preview before opening the detail page */}
                         <div style={{ width: "180px" }}>
                             <img
                                 src={report.imageUrl}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { FormEvent } from "react";
+import type { SyntheticEvent } from "react";
 
 interface FoundStatusPanelProps {
     loading: boolean;
@@ -14,10 +14,12 @@ export const FoundStatusPanel = ({
 }: FoundStatusPanelProps) => {
     const [password, setPassword] = useState("");
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    // stop the page reload and send the password to the parent page
+    const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
         const ok = await onSubmit(password);
         if (ok) {
+            // clear the input after a successful update
             setPassword("");
         }
     };

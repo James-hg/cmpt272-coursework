@@ -23,7 +23,7 @@ const getHeaders = (): HeadersInit => ({
     "X-Master-Key": masterKey,
 });
 
-// this tries to show the real api error instead of a vague fetch error
+// show the real api error instead of a vague fetch error
 const parseApiError = async (
     response: Response,
     fallbackMessage: string,

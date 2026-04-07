@@ -3,8 +3,10 @@ import { StatusMessage } from "../components/StatusMessage";
 import { useReports } from "../hooks/useReports";
 import { ReportStatus } from "../types";
 
+// show the active lost animal map on this page
 export const HomePage = () => {
     const { reports, loading, error } = useReports();
+    // keep only lost reports on the home map
     const lostReports = reports.filter((item) => item.status === ReportStatus.Lost);
 
     return (

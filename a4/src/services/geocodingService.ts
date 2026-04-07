@@ -1,9 +1,11 @@
 import type { NominatimReverseResponse } from "../types";
 
+// turn map coordinates into a readable address
 export const reverseGeocode = async (
     lat: number,
     lon: number,
 ): Promise<string> => {
+    // send the query values that nominatim expects
     const query = new URLSearchParams({
         format: "jsonv2",
         lat: String(lat),

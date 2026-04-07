@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { FormEvent } from "react";
+import type { SyntheticEvent } from "react";
 import { AnimalType, type Coordinates, type ReportDraft } from "../types";
 import { LocationPickerMap } from "./LocationPickerMap";
 import { StatusMessage } from "./StatusMessage";
@@ -22,6 +22,7 @@ const initialDraft: ReportDraft = {
     photoFile: null,
 };
 
+// show the main form for making a lost animal report
 export const ReportForm = ({
     submitting,
     submitError,
@@ -32,7 +33,7 @@ export const ReportForm = ({
     const [locationLoading, setLocationLoading] = useState(false);
     const [locationError, setLocationError] = useState<string | null>(null);
 
-    // this lets the form update one field without making lots of handlers
+    // update one field without making lots of handlers
     const updateDraft = <K extends keyof ReportDraft>(
         key: K,
         value: ReportDraft[K],
@@ -49,7 +50,7 @@ export const ReportForm = ({
         draft.locationAddress.trim().length > 0 &&
         draft.photoFile !== null;
 
-    // when the map is clicked, save the spot and try to fill the address too
+    // save the picked spot and try to fill the address too
     const handlePickLocation = async (coords: Coordinates) => {
         setLocationLoading(true);
         setLocationError(null);
@@ -68,8 +69,8 @@ export const ReportForm = ({
         }
     };
 
-    // send the whole draft up to the page when the form is submitted
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    // send the whole draft up when the form is submitted
+    const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
         await onSubmit(draft);
     };
@@ -162,6 +163,7 @@ export const ReportForm = ({
                     </div>
                     <div className="col-12">
                         <label className="form-label">Last Seen Location</label>
+                        {/* pick coordinates first, then let the address be edited */}
                         <LocationPickerMap
                             selectedLocation={draft.location}
                             onPickLocation={handlePickLocation}
@@ -196,6 +198,7 @@ export const ReportForm = ({
                 <button
                     className="btn btn-primary"
                     type="submit"
+                    // block submit until the required fields are filled in
                     disabled={!canSubmit || submitting}
                 >
                     {submitting ? "Submitting..." : "Submit Report"}
