@@ -1,0 +1,54 @@
+:root {
+    --tb-bg: #f8fbff;
+    --tb-nav: #123b69;
+    --tb-accent: #f18f01;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f5f0e6;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+.app-shell {
+    min-height: 100vh;
+}
+
+.app-navbar {
+    background: #6b4f3a;
+}
+
+.app-navbar .nav-link.active {
+    color: #fff !important;
+    font-weight: 700;
+}
+
+.tb-map {
+    width: 100%;
+    min-height: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.report-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.detail-image {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.btn-warning {
+    background-color: var(--tb-accent);
+    border-color: var(--tb-accent);
+}

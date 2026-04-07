@@ -1,0 +1,164 @@
+TailBlazer — Lost Animal Reporting System
+Overview
+For your final assignment, you will design and build TailBlazer, a fully client-side lost animal reporting web application built with React, TypeScript, and third-party APIs.
+
+The application allows pet owners to submit public reports for lost animals, including a photo, description, and a map pin for the last known location. When a pet is found, the owner can locate their post and use a password to mark it as resolved.
+
+This project is intentionally frontend-only; there is no backend server, no database engine, and no authentication service. You will use free public APIs for persistence and image hosting, and you will manage application state and security entirely on the client side. This constraint is deliberate: it will challenge you to think carefully about data architecture, async flows, and the real-world trade-offs of serverless frontend apps.
+
+Learning Objectives
+By the end of this project, you will have demonstrated the ability to:
+
+Design a multi-page React application using a consistent, scalable file structure
+Apply strict TypeScript throughout a real project, including interfaces, enums, generics, and proper type narrowing
+Integrate and coordinate multiple third-party REST APIs within a single async data flow
+Work with interactive maps using the Leaflet library inside a React environment
+Implement a client-side "ownership" pattern using hashed passwords
+Handle loading, error, and empty states gracefully across an asynchronous UI
+Requirements
+Functional Requirements
+Your application must implement all of the following features:
+
+1. Report Submission
+A form that accepts: animal name, animal type (from a fixed set of options), a photo upload, a free-text description, contact information, last seen location (set by clicking on a map), and a password
+The photo must be uploaded to ImgBB (https://api.imgbb.com) and the returned hosted URL stored as part of the report — do not store raw image data in JSONbin
+The last seen location must be selected interactively by clicking on a Leaflet map; the selected coordinates must be reverse-geocoded into a human-readable address using the Nominatim API (https://nominatim.openstreetmap.org) and displayed back to the user before submission
+The password must never be stored in plaintext — you must hash it using the browser's built-in crypto.subtle.digest("SHA-256", ...) before persisting
+On successful submission, the report is written to JSONbin.io as part of a shared reports array
+2. Map View (Home Page)
+A full-screen or prominent Leaflet map showing a pin for every report with status "lost"
+Clicking a pin opens a pop-up with the animal's name, type, photo thumbnail, and a link to the full detail page
+Found animals must not appear as active pins (they may be shown with a distinct visual style or hidden entirely — your choice)
+3. Report Detail Page
+Displays all report fields: photo, animal name, type, description, contact information, last seen address, and date posted
+If status is "lost", shows a "Mark as Found" button
+Clicking the button opens a password prompt (modal or inline); the entered password is hashed and compared against the stored hash; if they match, the report's status is updated to "found" in JSONbin
+4. Browsing & Filtering
+A list or grid view of all reports (separate from or alongside the map) as an alternative way to browse
+At minimum, users must be able to filter by: animal type, and status (lost / found / all)
+Non-Functional (Technical) Requirements
+No server-side components. There must be no Node.js server, Express app, Next.js API routes, serverless functions, or any backend of any kind. The application is purely a static frontend that communicates directly with third-party APIs from the browser.
+No user authentication system. The password-based ownership check is the only access control mechanism.
+Environment variables for all API keys must be stored in a .env file using Vite's import.meta.env convention. Your submission must include a .env.example file with placeholder values and a note in your README explaining how to configure it.
+All API errors (network failure, JSONbin quota exceeded, ImgBB rejection) must be caught and communicated to the user with a readable message — no unhandled promise rejections.
+API Summary
+API	Purpose
+JSONbin.io	Persistent storage for all reports
+ImgBB	Image hosting for animal photos
+Leaflet + react-leaflet	Interactive maps
+Web Crypto API	SHA-256 password hashing
+TypeScript Requirements
+TypeScript must be used strictly and meaningfully throughout the project. Using TypeScript in name only (e.g., typing everything as any, relying entirely on inference, or ignoring compiler errors) will result in significant mark deductions.
+
+Specifically, your project must demonstrate:
+
+Strict Mode
+Your tsconfig.json must include "strict": true. This enables noImplicitAny, strictNullChecks, strictFunctionTypes, and other checks. Your code must compile with zero errors under strict mode.
+
+Interfaces and Type Aliases
+Define explicit types for all data shapes. At minimum, you must define typed interfaces or type aliases for:
+
+The full AnimalReport data model (as stored in JSONbin)
+The form's draft/input state (which may differ from the stored model)
+API response shapes from ImgBB and JSONbin
+Enums
+Use TypeScript enums for any fixed set of values. At minimum, this includes:
+
+AnimalType (e.g., Dog, Cat, Bird, Rabbit, Other)
+ReportStatus (e.g., Lost, Found)
+Modules and Imports
+Every file must use ES module syntax (import / export) — no CommonJS require()
+Barrel files (index.ts) should be used to cleanly re-export from feature folders
+No logic should live in a single "god" file
+File Structure
+Your project must follow the layered structure discussed in class.
+
+Suggested Workflow
+You are free to approach this project however you like, but the following phased workflow is recommended to avoid getting stuck. Later phases build directly on earlier ones trying to build everything at once typically leads to integration problems in the end. This is meant to be a high-level suggested roadmap, not a strict step-by-step guide, feel free to iterate and add details as you see fit.
+
+Phase 1 — Models and Service Set up your Vite + React + TypeScript project. Define all your types and interfaces in src/types/ before writing any components. This forces you to think through your data model early. Implement the JSONbin service with functions to read and write the reports array. Test these with hardcoded mock data in the browser console before touching any UI.
+
+Phase 2 — Core UI Build the report submission form with all fields. Wire up the ImgBB upload. Add the Leaflet map click-to-pin interaction for the last seen location. Implement the full create-report flow end-to-end, including the SHA-256 password hash, and verify the data appears correctly in your JSONbin dashboard.
+
+Phase 3 — Map View and Browsing Build the home page map with pins loaded from JSONbin. Implement pin popups and navigation to the detail page. Build the listd view and add the filter controls for animal type and status.
+
+Phase 4 — Mark as Found Implement the "Mark as Found" password modal on the detail page, including the hash comparison and JSONbin update. Add loading spinners and error banners. Make the app responsive. Write your README declaration.
+
+Deliverables
+Submit a ZIP archive of your complete project. The archive must include:
+
+All source files under src/
+package.json and package-lock.json (or yarn.lock)
+tsconfig.json
+vite.config.ts
+.env.example with placeholder values for all required API keys
+README.md — see below
+Do not include node_modules/. Your submission will be tested by running:
+
+npm install
+npm run dev
+If the project does not run with these two commands using a properly configured .env file, you will receive zero marks for the functionality sections of the rubric. Test this yourself on a clean directory before submitting.
+
+README Requirements
+Your README.md must include:
+
+A brief outline of what your application does and how it works
+Clear setup instructions, including how to configure the .env file with API keys
+Any bugs or features that are not fully implmented
+AI usage disclosure: if you used any AI-assisted code generation tools, you must disclose this in your README along with a brief reflection on how you used the tool and what you learned from it. This is not a penalty but an opportunity to demonstrate your understanding of the code you wrote.
+Marking Rubric
+Total: 40 marks
+
+Functionality — 17 marks
+Criterion	Marks
+Report submission form works end-to-end (all fields, ImgBB upload, JSONbin write)	6
+Map view displays lost animal pins loaded from JSONbin; pins are clickable with popups	4
+Detail page displays all report fields correctly	2
+"Mark as Found" flow works: password hashed, compared, status updated in JSONbin	3
+List/grid view with functional filter controls (animal type + status)	2
+TypeScript Quality — 10 marks
+Criterion	Marks
+"strict": true in tsconfig; project compiles with zero errors	2
+Interfaces and type aliases defined for all data models; no untyped any	2
+Enums used correctly for AnimalType and ReportStatus	2
+File structure matches the required layout; barrel files used appropriately	2
+All API calls have typed request parameters and typed response handling	2
+Code and Architecture — 11 marks
+Criterion	Marks
+API calls are cleanly separated; no fetch calls inside components	2
+Custom hooks used to encapsulate data fetching or side effect logic	2
+Components are focused and reusable; no single component doing too many things	1
+Async errors are caught and displayed to the user; no unhandled rejections	2
+App is usable and reasonably styled	2
+Form validation prevents submission and general error catching	2
+README — 2 marks
+Criterion	Marks
+Setup instructions are clear; .env is present and accurate	1
+AI usage disclosure is present and reflective	1
+TailBlazer
+TailBlazer
+Criteria	Ratings	Pts
+Functionality
+17 pts
+Full Marks
+0 pts
+No Marks
+/ 17 pts
+TS Quality
+10 pts
+Full Marks
+0 pts
+No Marks
+/ 10 pts
+Code
+11 pts
+Full Marks
+0 pts
+No Marks
+/ 11 pts
+README
+2 pts
+Full Marks
+0 pts
+No Marks
+/ 2 pts
